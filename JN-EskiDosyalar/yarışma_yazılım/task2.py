@@ -12,15 +12,12 @@ cruise_altitude = 30
 
 plane = plane_lib.Plane("/dev/serial/by-id/usb-ArduPilot_Pixhawk1_19003D000551353532333634-if00")
 
-
-
 while True:
     print(plane.get_ap_mode())
 
     if plane.get_ap_mode() == "ACRO":
         plane.set_ap_mode("AUTO")
         break
-
 
 def get_distance_metres(aLocation1, aLocation2):
     R = 6378137.0
@@ -43,9 +40,8 @@ def distance_to_current_waypoint():
     It returns None for the first waypoint (Home location).
     """
     nextwaypoint = plane.vehicle.commands.next
-
-   
-        # ben 1000 yaptım YEC
+    
+    # ben 1000 yaptım YEC
 
     missionitem=plane.vehicle.commands[0] #commands are zero indexed
     lat = missionitem.x
@@ -53,8 +49,7 @@ def distance_to_current_waypoint():
     alt = missionitem.z
     targetWaypointLocation = LocationGlobalRelative(lat,lon,alt)
     distancetopoint = get_distance_metres(plane.vehicle.location.global_frame, targetWaypointLocation)
-    
-
+   
     return distancetopoint
 
 def sagdan():
@@ -66,9 +61,7 @@ def sagdan():
         time.sleep(10)
         break
 
-
     plane.set_ap_mode("AUTO")
-
 
 def soldan():
 
@@ -79,24 +72,11 @@ def soldan():
         time.sleep(10)
         break
 
-
     plane.set_ap_mode("AUTO")
-
-
-
-
-
-
 
 def görev_sonu():
     while True:
         plane.set_ap_mode("HOLD")
-
-
-
-
-
-
 
 cap = cv2.VideoCapture(0)
 cap.set(3, 960)
@@ -146,7 +126,7 @@ while True:
     cnts4 = cv2.findContours(mask4, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     cnts4 = imutils.grab_contours(cnts4)
 
-
+    
     # kırmızı
     for c in cnts1:
         alan1 = cv2.contourArea(c)
@@ -197,8 +177,6 @@ while True:
             cv2.circle(frame, (cx,cy), 7, (255,255,255), -1)
             cv2.putText(frame, "Yesil", (cx-20, cy-20), cv2.FONT_HERSHEY_SIMPLEX, 2.5, (255, 255, 255), 3)
 
-
-
     cv2.imshow("Renk Tespit", frame)
 
     if cv2.waitKey(1) == ord('q'):
@@ -206,11 +184,3 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
-
-
-
-
-
-
-
-

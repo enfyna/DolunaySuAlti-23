@@ -11,14 +11,12 @@ cruise_altitude = 30
 
 plane = plane_lib.Plane("/dev/serial/by-id/usb-ArduPilot_Pixhawk1_19003D000551353532333634-if00")
 
-
 while True:
     print(plane.get_ap_mode())
 
     if plane.get_ap_mode() == "ACRO":
         plane.set_ap_mode("AUTO")
         break
-
 
 def get_distance_metres(aLocation1, aLocation2):
     R = 6378137.0
@@ -41,8 +39,7 @@ def distance_to_current_waypoint():
     It returns None for the first waypoint (Home location).
     """
     nextwaypoint = plane.vehicle.commands.next
-
-   
+    
         # ben 1000 yaptım YEC
 
     missionitem=plane.vehicle.commands[0] #commands are zero indexed
@@ -51,8 +48,7 @@ def distance_to_current_waypoint():
     alt = missionitem.z
     targetWaypointLocation = LocationGlobalRelative(lat,lon,alt)
     distancetopoint = get_distance_metres(plane.vehicle.location.global_frame, targetWaypointLocation)
-    
-
+   
     return distancetopoint
 
 def sagdan():
@@ -69,7 +65,6 @@ def sagdan():
         break
     plane.set_ap_mode("AUTO")
 
-
 def soldan():
 
     plane.set_ap_mode("GUIDED")
@@ -83,9 +78,6 @@ def soldan():
         time.sleep(3)
         break
     plane.set_ap_mode("AUTO")
-
-
-
 
 def donus():
 
@@ -113,13 +105,6 @@ def donus():
     plane.set_ap_mode("RTL")
     #plane.set_ap_wp = 2
 
-
-
-
-
-
-
-
 cap = cv2.VideoCapture(0)
 cap.set(3, 960)
 cap.set(4, 544)
@@ -128,10 +113,8 @@ while True:
 
     limit = 15000
     _,frame = cap.read()
-
     
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-
     
     lower_red_1 = np.array([0,180,80])
     upper_red_1 = np.array([10,255,255])
@@ -148,7 +131,6 @@ while True:
     lower_white = np.array([5, 5, 0])
     upper_white = np.array([35, 35, 255])
    
-
     mask_red1 = cv2.inRange(hsv, lower_red_1, upper_red_1)
     mask_red2 = cv2.inRange(hsv, lower_red_2, upper_red_2)
     
@@ -156,7 +138,6 @@ while True:
     mask2 = cv2.inRange(hsv, lower_yellow, upper_yellow)
     mask3 = cv2.inRange(hsv, lower_green, upper_green)
     mask4 = cv2.inRange(hsv, lower_white, upper_white)
-
 
     cnts1 = cv2.findContours(mask1, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     cnts1 = imutils.grab_contours(cnts1)
@@ -169,7 +150,6 @@ while True:
 
     cnts4 = cv2.findContours(mask4, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     cnts4 = imutils.grab_contours(cnts4)
-
 
     # kırmızı
     for c in cnts1:
@@ -204,11 +184,6 @@ while True:
 
             cv2.circle(frame, (cx,cy), 7, (255,255,255), -1)
             cv2.putText(frame, "Sari", (cx-20, cy-20), cv2.FONT_HERSHEY_SIMPLEX, 2.5, (255, 255, 255), 3)
-
-
-
-
-
 
     cv2.imshow("Renk Tespit", frame)
 

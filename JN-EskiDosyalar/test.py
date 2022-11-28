@@ -5,10 +5,6 @@ import math
 import time
 import numpy as np
 
-
-
-
-
 def gstreamer_pipeline(
     sensor_id=0,
     capture_width=1920,
@@ -36,7 +32,6 @@ def gstreamer_pipeline(
         )
     )
 
-
 # Set up option parsing to get connection string
 import argparse
 parser = argparse.ArgumentParser(description='Commands vehicle using vehicle.simple_goto.')
@@ -56,7 +51,6 @@ if not connection_string:
 print('Connecting to vehicle on: %s' % connection_string)
 vehicle = connect(connection_string, wait_ready=True)
 
-
 def get_location_metres(original_location, dNorth, dEast):
     earth_radius = 6378137.0  # Radius of "spherical" earth
     # Coordinate offsets in radians
@@ -71,8 +65,6 @@ def get_location_metres(original_location, dNorth, dEast):
     a = LocationGlobal(newlat, newlon, original_location.alt)
     # print("location",a)
     return a
-
-
 
 görev_flag = True
 
@@ -95,8 +87,6 @@ def görev():
     vehicle.simple_goto(point4)
     time.sleep(20)
     vehicle.simple_goto(point5)
-
-
 
 def show_camera():
     window_title = "CSI Camera"
@@ -160,9 +150,7 @@ def show_camera():
                     cv2.putText(frame, "red", (50,75), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0,0,0), 2)
                 cv2.imshow("window_title", frame)
 
-
                 if cv2.waitKey(1) & 0xFF == ord("q"): break
-
                 
                 if cv2.getWindowProperty(window_title, cv2.WND_PROP_AUTOSIZE) >= 0:
                     cv2.imshow(window_title, frame)
@@ -182,10 +170,5 @@ def show_camera():
     else:
         print("Error: Unable to open camera")
 
-
 if __name__ == "__main__":
     show_camera()
-
-
-
-

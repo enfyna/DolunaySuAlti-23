@@ -10,16 +10,12 @@ cruise_altitude = 30
 
 plane = plane_lib.Plane("/dev/serial/by-id/usb-ArduPilot_Pixhawk1_19003D000551353532333634-if00")
 
-
-
 while True:
     print(plane.get_ap_mode())
 
     if plane.get_ap_mode() == "ACRO":
         plane.set_ap_mode("AUTO")
         break
-
-
 
 def engelden_kacma():
 
@@ -32,13 +28,7 @@ def engelden_kacma():
     #time.sleep(0.001)
 
     plane.set_ap_mode("AUTO")
-
-
-
-
-
         
-
 cap = cv2.VideoCapture(0)
 cap.set(3, 960)
 cap.set(4, 544)
@@ -48,7 +38,6 @@ while True:
     _,frame = cap.read()
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-
     
     lower_red_1 = np.array([0,180,80])
     upper_red_1 = np.array([10,255,255])
@@ -74,7 +63,6 @@ while True:
     mask3 = cv2.inRange(hsv, lower_green, upper_green)
     mask4 = cv2.inRange(hsv, lower_white, upper_white)
 
-
     cnts1 = cv2.findContours(mask1, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     cnts1 = imutils.grab_contours(cnts1)
 
@@ -86,7 +74,6 @@ while True:
 
     cnts4 = cv2.findContours(mask4, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     cnts4 = imutils.grab_contours(cnts4)
-
 
     for c in cnts1:
         alan1 = cv2.contourArea(c)
@@ -146,7 +133,6 @@ while True:
         alan4 = cv2.contourArea(c)
         if alan4 > 1000:
 
-
             # engelden kaçma
             if alan4 > 15000:
                 engelden_kacma()
@@ -168,11 +154,3 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
-
-
-
-
-
-
-
-

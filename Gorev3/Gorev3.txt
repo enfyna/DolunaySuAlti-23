@@ -1,2 +1,2 @@
-Görev 3
+Görev 3 : 
 Ses işleme ile havuzdaki pinger bulunması.

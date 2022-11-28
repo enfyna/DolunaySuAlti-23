@@ -4,32 +4,20 @@
 #include <cstdio>
 #include <ctime>
 
-//STM'in üzerindeki ledi mavi buton ile açıp kapatma kodu
-//
+///////////////////////////////////////////////////////////
+//STM'in üzerindeki ledi mavi buton ile açıp kapatma kodu//
+///////////////////////////////////////////////////////////
 
 int main()
 {
     DigitalOut led(LED1); //Led ayarla 
     DigitalIn button(BUTTON1); //Buton ayarla
     button.mode(PullUp); //Buton basıldığında 1 bırakıldığında 0 olması için ayarla
-    int sure = 0; 
 
     while (true) {
-        if(button == true){
-            sure++;
-        }
-        else if (button == false) {
-            if(sure>0){
-                sure--;
-            } 
-        }
-        if(sure>0){
-        led = !led;
-        printf("%d\n",sure);
-        ThisThread::sleep_for(sure);
-        }
-        else if (sure == 0){
-            led = true;
-        }
+        if(button == true) //Buton basılı tutulduğunda ledi aç
+            led = 1;
+        else if (button == false) //Buton basılı değilse ledi kapat
+            led = 0;
     }
 }

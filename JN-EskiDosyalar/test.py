@@ -5,6 +5,10 @@ import math
 import time
 import numpy as np
 
+
+görev_flag = True
+
+
 def gstreamer_pipeline(
     sensor_id=0,
     capture_width=1920,
@@ -32,11 +36,12 @@ def gstreamer_pipeline(
         )
     )
 
+
 # Set up option parsing to get connection string
 import argparse
 parser = argparse.ArgumentParser(description='Commands vehicle using vehicle.simple_goto.')
 parser.add_argument('--connect',
-                    default='tcp:127.0.0.1:5762')
+                    default='/dev/serial/by-id/usb-ArduPilot_Pixhawk1_3D004F000651353136343336-if00')
 args = parser.parse_args()
 
 connection_string = args.connect
@@ -50,6 +55,7 @@ if not connection_string:
 
 print('Connecting to vehicle on: %s' % connection_string)
 vehicle = connect(connection_string, wait_ready=True)
+
 
 def get_location_metres(original_location, dNorth, dEast):
     earth_radius = 6378137.0  # Radius of "spherical" earth
@@ -66,31 +72,35 @@ def get_location_metres(original_location, dNorth, dEast):
     # print("location",a)
     return a
 
+
+
 görev_flag = True
 
 def görev():
     # pointler 
-    point1 = LocationGlobalRelative(-35.3631232, 149.1652943, 100)
-    point2 = LocationGlobalRelative(-35.3630488, 149.1651200, 100)
-    point3 = LocationGlobalRelative(-35.3629318, 149.1652715, 100)
-    point4 = LocationGlobalRelative(-35.3628224,149.1650891, 100)
-    point5 = LocationGlobalRelative(-35.3627005, 149.1652420, 100)
+    point1 = LocationGlobalRelative(40.1959956, 29.0430792, 100)
+    point2 = LocationGlobalRelative(40.1958829, 29.0431201, 100)
+    point3 = LocationGlobalRelative(40.1959014, 29.0433307, 100)
+    #point4 = LocationGlobalRelative(-35.3628224,149.1650891, 100)
+    #point5 = LocationGlobalRelative(-35.3627005, 149.1652420, 100)
 
-    noktalar = [point1,point2,point3,point4,point5]
-
+    #noktalar = [point1,point2,point3]
+    time.sleep(5)
     vehicle.simple_goto(point1)
     time.sleep(20)
     vehicle.simple_goto(point2)
     time.sleep(20)
     vehicle.simple_goto(point3)
-    time.sleep(20)
-    vehicle.simple_goto(point4)
-    time.sleep(20)
-    vehicle.simple_goto(point5)
+    #time.sleep(20)
+    #vehicle.simple_goto(point4)
+    #time.sleep(20)
+    #vehicle.simple_goto(point5)
+
+
 
 def show_camera():
     window_title = "CSI Camera"
-
+    global görev_flag
     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
     print(gstreamer_pipeline(flip_method=0))
     video_capture = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
@@ -125,6 +135,7 @@ def show_camera():
                 if len(counters_red) > 0:
 
                     # görev başlatma komutu
+                    
                     if (görev_flag):
                         görev()
                         görev_flag = False
@@ -150,7 +161,9 @@ def show_camera():
                     cv2.putText(frame, "red", (50,75), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0,0,0), 2)
                 cv2.imshow("window_title", frame)
 
+
                 if cv2.waitKey(1) & 0xFF == ord("q"): break
+
                 
                 if cv2.getWindowProperty(window_title, cv2.WND_PROP_AUTOSIZE) >= 0:
                     cv2.imshow(window_title, frame)
@@ -170,5 +183,10 @@ def show_camera():
     else:
         print("Error: Unable to open camera")
 
+
 if __name__ == "__main__":
     show_camera()
+
+
+
+

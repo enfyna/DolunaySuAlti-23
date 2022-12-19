@@ -33,6 +33,9 @@ m.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, # emir kodu int olarakda verilebilir boy
 
 time.sleep(1)
 
+i = 0
+dosya = open("mesaj_id.txt",mode="w") #mesaj idlerini kaydetmek icin yaptım onemli degil 
+
 while True:
     try:
         msg1 = link.messages
@@ -41,7 +44,19 @@ while True:
         # print(msg1['MAV'])
         # print(msg1['HOME'])
 
-        msg2 = link.recv_match(blocking=True)
+        link.mav.command_long_send(link.target_system,link.target_component,
+        m.mavlink.MAV_CMD_REQUEST_MESSAGE,
+        0,
+        i,0,0,0,0,0,0) 
+        i+=1 # tum mesaj idlerini teker teker dene
+        msg2 = link.recv_match(type='COMMAND_ACK',blocking=True).to_dict()
+        if msg2['result'] == 0:
+            msg2 = link.recv_match(blocking=True).to_dict()
+            if msg2['mavpackettype'] != 'HEARTBEAT': #heartbeat gormekten sıkıldım o yuzden yazmaya gerek yok
+                s1 = 25 - len(msg2['mavpackettype'])
+                s = msg2['mavpackettype']+"_"*s1+str(i)+"\n"
+                print(s,end="\n")
+                dosya.write(s) #dosyaya kaydet (bunun yapılmasına gerek yok)
 
         # recv_match fonksiyonu pixhawk durumu hakkında bilgileri dict olarak verir
         # Type parametresi

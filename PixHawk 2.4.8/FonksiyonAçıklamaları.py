@@ -50,13 +50,14 @@ while True:
         i,0,0,0,0,0,0) 
         i+=1 # tum mesaj idlerini teker teker dene
         msg2 = link.recv_match(type='COMMAND_ACK',blocking=True).to_dict()
-        if msg2['result'] == 0:
+        if msg2['result'] == 0 or msg2['result'] == 4:
             msg2 = link.recv_match(blocking=True).to_dict()
-            if msg2['mavpackettype'] != 'HEARTBEAT': #heartbeat gormekten sıkıldım o yuzden yazmaya gerek yok
+            if msg2['mavpackettype'] != 'HEARTBEAT' and msg2['mavpackettype'] != 'TIMESYNC'\
+                and msg2['mavpackettype'] != 'STATUSTEXT': # bunlara gerek yok
                 s1 = 25 - len(msg2['mavpackettype'])
                 s = msg2['mavpackettype']+"_"*s1+str(i)+"\n"
                 print(s,end="\n")
-                dosya.write(s) #dosyaya kaydet (bunun yapılmasına gerek yok)
+                dosya.write(s)
 
         # recv_match fonksiyonu pixhawk durumu hakkında bilgileri dict olarak verir
         # Type parametresi
@@ -81,4 +82,8 @@ m.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
 0,0,0,0,0,0,0)
 
 
-#
+
+
+
+
+

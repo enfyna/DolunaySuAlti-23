@@ -48,7 +48,7 @@ while True:
         m.mavlink.MAV_CMD_REQUEST_MESSAGE,
         0,
         i,0,0,0,0,0,0) 
-        i+=1 # tum mesaj idlerini teker teker dene
+        
         msg2 = link.recv_match(type='COMMAND_ACK',blocking=True).to_dict()
         if msg2['result'] == 0 or msg2['result'] == 4:
             msg2 = link.recv_match(blocking=True).to_dict()
@@ -58,7 +58,7 @@ while True:
                 s = msg2['mavpackettype']+"_"*s1+str(i)+"\n"
                 print(s,end="\n")
                 dosya.write(s)
-
+        i+=1 # tum mesaj idlerini teker teker dene
         # recv_match fonksiyonu pixhawk durumu hakkında bilgileri dict olarak verir
         # Type parametresi
         # istediginiz bilgiyi verir eger bos bırakılırsa tum bilgileri verir

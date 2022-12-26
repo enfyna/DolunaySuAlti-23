@@ -1,0 +1,194 @@
+2022-12-24 20:16:59.408581 Arm edildi.
+\\ GOREV BASLADI ///2022-12-24 20:16:59.409172
+2022-12-24 20:16:59.409617 STABILIZE geçildi.
+2022-12-24 20:16:59.422150 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 20:17:02.500998 HATA : <class 'cv2.error'>
+2022-12-24 20:17:29.392990 Disarm edildi.
+2022-12-24 20:17:30.393062 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 20:18:08.751222
+2022-12-24 20:18:09.390139 Arm edildi.
+2022-12-24 20:18:09.390662 ACRO Degistirldi.
+2022-12-24 20:18:09.396186 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 20:18:25.387140 Disarm edildi.
+2022-12-24 20:18:26.387350 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 20:18:54.004758
+2022-12-24 20:21:42.370875 Disarm edildi.
+2022-12-24 20:21:43.369843 Disarm edildi.
+2022-12-24 20:36:05.250665 HATA : <class 'serial.serialutil.SerialException'>
+\\ GOREV BASLADI ///2022-12-24 20:36:35.206716
+2022-12-24 20:36:35.219531 HATA : <class 'serial.serialutil.SerialException'>
+\\ GOREV BASLADI ///2022-12-24 20:37:02.517161
+2022-12-24 20:37:02.529162 HATA : <class 'serial.serialutil.SerialException'>
+2022-12-24 20:37:05.654948 HATA : <class 'serial.serialutil.SerialException'>
+\\ GOREV BASLADI ///2022-12-24 21:45:26.940751
+2022-12-24 21:45:31.142908 Arm edildi.
+2022-12-24 21:45:31.143437 AUTO geçildi.
+2022-12-24 21:46:21.132009 HATA
+2022-12-24 21:46:24.136109 STABILIZE geçildi.
+2022-12-24 21:48:30.142075 Disarm edildi.
+2022-12-24 21:48:31.468388 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 21:48:43.082597
+2022-12-24 21:48:44.942528 Arm edildi.
+2022-12-24 21:48:44.942854 AUTO Degistirldi.
+2022-12-24 21:48:46.206248 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 3}
+2022-12-24 21:48:51.935669 SERVO_OUTPUT_RAW {time_usec : 1903785897, port : 0, servo1_raw : 1514, servo2_raw : 1513, servo3_raw : 1486, servo4_raw : 1513, servo5_raw : 1548, servo6_raw : 1546, servo7_raw : 1453, servo8_raw : 1451}
+2022-12-24 21:48:51.936305 ACRO Degistirldi.
+2022-12-24 21:51:09.180523 Disarm edildi.
+2022-12-24 21:51:10.082507 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 21:51:16.719396
+\\ GOREV BASLADI ///2022-12-24 21:52:42.830688
+2022-12-24 21:52:45.608879 Arm edildi.
+2022-12-24 21:52:45.609704 AUTO geçildi.
+2022-12-24 21:52:52.397249 HATA
+2022-12-24 21:52:55.401355 STABILIZE geçildi.
+\\ GOREV BASLADI ///2022-12-24 21:57:44.368900
+\\ GOREV BASLADI ///2022-12-24 21:57:53.871477
+2022-12-24 21:57:53.921746 HATA : <class 'cv2.error'> ("OpenCV(4.6.0) /tmp/pip-wheel-u79916uk/opencv-python_ea2489746b3a43bfb3f2b5331b7ab47a/opencv/modules/imgcodecs/src/loadsave.cpp:801: error: (-215:Assertion failed) !_img.empty() in function 'imwrite'\n",)
+2022-12-24 21:58:02.389145 Arm edildi.
+2022-12-24 21:58:02.390200 AUTO geçildi.
+2022-12-24 21:58:09.388127 HATA : <class 'serial.serialutil.SerialException'> ('device reports readiness to read but returned no data (device disconnected or multiple access on port?)',)
+2022-12-24 21:58:10.387717 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 21:58:28.420744
+2022-12-24 21:58:28.453180 HATA : <class 'cv2.error'> ("OpenCV(4.6.0) /tmp/pip-wheel-u79916uk/opencv-python_ea2489746b3a43bfb3f2b5331b7ab47a/opencv/modules/imgcodecs/src/loadsave.cpp:801: error: (-215:Assertion failed) !_img.empty() in function 'imwrite'\n",)
+2022-12-24 21:58:43.385786 Disarm edildi.
+2022-12-24 21:58:45.385467 Arm edildi.
+2022-12-24 21:58:45.385974 AUTO geçildi.
+2022-12-24 21:59:00.058873 HATA
+2022-12-24 21:59:03.062804 STABILIZE geçildi.
+2022-12-24 21:59:06.382768 Disarm edildi.
+2022-12-24 21:59:06.384001 HATA : <class 'cv2.error'> ("OpenCV(4.6.0) /tmp/pip-wheel-u79916uk/opencv-python_ea2489746b3a43bfb3f2b5331b7ab47a/opencv/modules/imgcodecs/src/loadsave.cpp:801: error: (-215:Assertion failed) !_img.empty() in function 'imwrite'\n",)
+2022-12-24 21:59:09.383632 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 22:18:18.714852
+2022-12-24 22:18:22.849552 HATA : <class 'cv2.error'> ("OpenCV(4.6.0) /tmp/pip-wheel-u79916uk/opencv-python_ea2489746b3a43bfb3f2b5331b7ab47a/opencv/modules/imgcodecs/src/loadsave.cpp:801: error: (-215:Assertion failed) !_img.empty() in function 'imwrite'\n",)
+\\ GOREV BASLADI ///2022-12-24 22:18:22.850196
+2022-12-24 22:18:23.875724 HATA : <class 'cv2.error'> ("OpenCV(4.6.0) /tmp/pip-wheel-u79916uk/opencv-python_ea2489746b3a43bfb3f2b5331b7ab47a/opencv/modules/imgcodecs/src/loadsave.cpp:801: error: (-215:Assertion failed) !_img.empty() in function 'imwrite'\n",)
+2022-12-24 22:18:35.678518 Arm edildi.
+2022-12-24 22:18:37.677439 Arm edildi.
+2022-12-24 22:18:38.682504 STABILIZE geçildi.
+2022-12-24 22:18:38.689801 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:18:38.695983 SERVO_OUTPUT_RAW {time_usec : 96440146, port : 0, servo1_raw : 1500, servo2_raw : 1500, servo3_raw : 1500, servo4_raw : 1500, servo5_raw : 1500, servo6_raw : 1500, servo7_raw : 1500, servo8_raw : 1500}
+2022-12-24 22:18:39.698848 HATA : <class 'cv2.error'> ("OpenCV(4.6.0) /tmp/pip-wheel-u79916uk/opencv-python_ea2489746b3a43bfb3f2b5331b7ab47a/opencv/modules/imgcodecs/src/loadsave.cpp:801: error: (-215:Assertion failed) !_img.empty() in function 'imwrite'\n",)
+2022-12-24 22:18:40.681286 STABILIZE geçildi.
+2022-12-24 22:18:40.687714 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:18:40.700089 SERVO_OUTPUT_RAW {time_usec : 98445171, port : 0, servo1_raw : 1536, servo2_raw : 1536, servo3_raw : 1463, servo4_raw : 1536, servo5_raw : 1504, servo6_raw : 1480, servo7_raw : 1519, servo8_raw : 1495}
+2022-12-24 22:19:04.724864 MANUAL geçildi.
+2022-12-24 22:19:04.753955 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:19:04.761760 SERVO_OUTPUT_RAW {time_usec : 122507711, port : 0, servo1_raw : 1264, servo2_raw : 1264, servo3_raw : 1735, servo4_raw : 1264, servo5_raw : 1656, servo6_raw : 1452, servo7_raw : 1547, servo8_raw : 1343}
+2022-12-24 22:19:05.764772 HATA : <class 'cv2.error'> ("OpenCV(4.6.0) /tmp/pip-wheel-u79916uk/opencv-python_ea2489746b3a43bfb3f2b5331b7ab47a/opencv/modules/imgcodecs/src/loadsave.cpp:801: error: (-215:Assertion failed) !_img.empty() in function 'imwrite'\n",)
+2022-12-24 22:19:06.676455 Disarm edildi.
+2022-12-24 22:19:07.679238 HATA : <class 'cv2.error'> ("OpenCV(4.6.0) /tmp/pip-wheel-u79916uk/opencv-python_ea2489746b3a43bfb3f2b5331b7ab47a/opencv/modules/imgcodecs/src/loadsave.cpp:801: error: (-215:Assertion failed) !_img.empty() in function 'imwrite'\n",)
+2022-12-24 22:19:07.682358 Disarm edildi.
+2022-12-24 22:19:11.493318 MANUAL geçildi.
+2022-12-24 22:19:11.496166 {'mavpackettype': 'COMMAND_ACK', 'command': 400, 'result': 0}
+2022-12-24 22:19:11.503746 SERVO_OUTPUT_RAW {time_usec : 129250049, port : 0, servo1_raw : 1500, servo2_raw : 1500, servo3_raw : 1500, servo4_raw : 1500, servo5_raw : 1500, servo6_raw : 1500, servo7_raw : 1500, servo8_raw : 1500}
+2022-12-24 22:19:17.263008 Disarm edildi.
+2022-12-24 22:19:23.078441 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 22:19:43.401257
+2022-12-24 22:19:49.672188 Arm edildi.
+2022-12-24 22:19:52.676148 STABILIZE geçildi.
+2022-12-24 22:19:52.683821 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:19:52.694130 SERVO_OUTPUT_RAW {time_usec : 170442748, port : 0, servo1_raw : 1500, servo2_raw : 1500, servo3_raw : 1500, servo4_raw : 1500, servo5_raw : 1500, servo6_raw : 1500, servo7_raw : 1500, servo8_raw : 1500}
+2022-12-24 22:20:23.478882 MANUAL geçildi.
+2022-12-24 22:20:23.508953 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:20:23.516987 SERVO_OUTPUT_RAW {time_usec : 201270672, port : 0, servo1_raw : 1500, servo2_raw : 1500, servo3_raw : 1500, servo4_raw : 1500, servo5_raw : 1500, servo6_raw : 1500, servo7_raw : 1500, servo8_raw : 1500}
+2022-12-24 22:20:29.667315 Disarm edildi.
+2022-12-24 22:20:35.356003 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 22:20:59.598490
+2022-12-24 22:20:59.667252 Arm edildi.
+2022-12-24 22:21:02.678642 SERVO_OUTPUT_RAW {time_usec : 240435066, port : 0, servo1_raw : 1500, servo2_raw : 1500, servo3_raw : 1500, servo4_raw : 1500, servo5_raw : 1500, servo6_raw : 1500, servo7_raw : 1500, servo8_raw : 1500}
+2022-12-24 22:21:02.679586 ACRO Degistirldi.
+2022-12-24 22:21:02.687802 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:21:02.703282 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 0}
+2022-12-24 22:21:02.711921 SERVO_OUTPUT_RAW {time_usec : 240468020, port : 0, servo1_raw : 1500, servo2_raw : 1500, servo3_raw : 1500, servo4_raw : 1500, servo5_raw : 1500, servo6_raw : 1500, servo7_raw : 1500, servo8_raw : 1500}
+2022-12-24 22:21:13.497869 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 0}
+2022-12-24 22:21:13.530836 SERVO_OUTPUT_RAW {time_usec : 251287988, port : 0, servo1_raw : 1495, servo2_raw : 1495, servo3_raw : 1504, servo4_raw : 1495, servo5_raw : 1586, servo6_raw : 1587, servo7_raw : 1412, servo8_raw : 1413}
+2022-12-24 22:21:18.543403 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 4}
+2022-12-24 22:21:18.554231 SERVO_OUTPUT_RAW {time_usec : 256312779, port : 0, servo1_raw : 1473, servo2_raw : 1473, servo3_raw : 1526, servo4_raw : 1473, servo5_raw : 1582, servo6_raw : 1581, servo7_raw : 1418, servo8_raw : 1417}
+2022-12-24 22:21:23.664666 Disarm edildi.
+2022-12-24 22:21:24.663743 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 22:21:41.960249
+\\ GOREV BASLADI ///2022-12-24 22:27:13.833190
+2022-12-24 22:27:14.411192 Arm edildi.
+2022-12-24 22:27:17.423354 SERVO_OUTPUT_RAW {time_usec : 81433555, port : 0, servo1_raw : 1500, servo2_raw : 1500, servo3_raw : 1500, servo4_raw : 1500, servo5_raw : 1500, servo6_raw : 1500, servo7_raw : 1500, servo8_raw : 1500}
+2022-12-24 22:27:17.424266 ACRO Degistirldi.
+2022-12-24 22:27:17.431262 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:27:17.438038 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 0}
+2022-12-24 22:27:17.447485 SERVO_OUTPUT_RAW {time_usec : 81458863, port : 0, servo1_raw : 1500, servo2_raw : 1500, servo3_raw : 1500, servo4_raw : 1500, servo5_raw : 1500, servo6_raw : 1500, servo7_raw : 1500, servo8_raw : 1500}
+2022-12-24 22:27:28.177392 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 0}
+2022-12-24 22:27:28.186791 SERVO_OUTPUT_RAW {time_usec : 92198860, port : 0, servo1_raw : 1470, servo2_raw : 1470, servo3_raw : 1529, servo4_raw : 1470, servo5_raw : 1477, servo6_raw : 1100, servo7_raw : 1900, servo8_raw : 1522}
+2022-12-24 22:27:33.198840 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 4}
+2022-12-24 22:27:33.206274 SERVO_OUTPUT_RAW {time_usec : 97218849, port : 0, servo1_raw : 1453, servo2_raw : 1453, servo3_raw : 1546, servo4_raw : 1453, servo5_raw : 1459, servo6_raw : 1100, servo7_raw : 1900, servo8_raw : 1540}
+2022-12-24 22:27:38.409213 Disarm edildi.
+2022-12-24 22:27:39.409499 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 22:28:17.404955
+2022-12-24 22:28:18.405604 Arm edildi.
+2022-12-24 22:28:21.415473 SERVO_OUTPUT_RAW {time_usec : 145433609, port : 0, servo1_raw : 1459, servo2_raw : 1459, servo3_raw : 1540, servo4_raw : 1459, servo5_raw : 1473, servo6_raw : 1487, servo7_raw : 1512, servo8_raw : 1526}
+2022-12-24 22:28:21.416029 ACRO Degistirldi.
+2022-12-24 22:28:21.423309 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:28:22.411214 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 0}
+2022-12-24 22:28:22.418887 SERVO_OUTPUT_RAW {time_usec : 146436175, port : 0, servo1_raw : 1468, servo2_raw : 1468, servo3_raw : 1531, servo4_raw : 1468, servo5_raw : 1584, servo6_raw : 1589, servo7_raw : 1410, servo8_raw : 1415}
+2022-12-24 22:28:33.441347 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 0}
+2022-12-24 22:28:33.447747 SERVO_OUTPUT_RAW {time_usec : 157466183, port : 0, servo1_raw : 1479, servo2_raw : 1479, servo3_raw : 1520, servo4_raw : 1479, servo5_raw : 1558, servo6_raw : 1582, servo7_raw : 1417, servo8_raw : 1441}
+2022-12-24 22:28:38.460595 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 4}
+2022-12-24 22:28:38.467936 SERVO_OUTPUT_RAW {time_usec : 162486175, port : 0, servo1_raw : 1486, servo2_raw : 1486, servo3_raw : 1513, servo4_raw : 1486, servo5_raw : 1560, servo6_raw : 1588, servo7_raw : 1411, servo8_raw : 1439}
+2022-12-24 22:28:44.402840 Disarm edildi.
+2022-12-24 22:28:45.403108 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 22:28:59.425473
+2022-12-24 22:29:06.401307 Arm edildi.
+2022-12-24 22:29:09.405374 STABILIZE geçildi.
+2022-12-24 22:29:09.413941 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:29:09.422899 SERVO_OUTPUT_RAW {time_usec : 193443606, port : 0, servo1_raw : 1544, servo2_raw : 1544, servo3_raw : 1455, servo4_raw : 1544, servo5_raw : 1567, servo6_raw : 1619, servo7_raw : 1380, servo8_raw : 1432}
+2022-12-24 22:29:40.310131 MANUAL geçildi.
+2022-12-24 22:29:40.346556 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:29:40.356752 SERVO_OUTPUT_RAW {time_usec : 224378670, port : 0, servo1_raw : 1500, servo2_raw : 1500, servo3_raw : 1500, servo4_raw : 1500, servo5_raw : 1500, servo6_raw : 1500, servo7_raw : 1500, servo8_raw : 1500}
+2022-12-24 22:29:46.399066 Disarm edildi.
+2022-12-24 22:29:52.152327 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 22:30:14.536202
+2022-12-24 22:32:05.386539 Disarm edildi.
+2022-12-24 22:32:11.133243 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 22:32:23.226002
+2022-12-24 22:32:29.384849 Arm edildi.
+2022-12-24 22:32:32.396473 STABILIZE geçildi.
+2022-12-24 22:32:32.403797 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:32:32.413934 SERVO_OUTPUT_RAW {time_usec : 396451237, port : 0, servo1_raw : 1500, servo2_raw : 1500, servo3_raw : 1500, servo4_raw : 1500, servo5_raw : 1500, servo6_raw : 1500, servo7_raw : 1500, servo8_raw : 1500}
+2022-12-24 22:33:03.153701 MANUAL geçildi.
+2022-12-24 22:33:03.184288 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:33:03.191599 SERVO_OUTPUT_RAW {time_usec : 427233555, port : 0, servo1_raw : 1544, servo2_raw : 1545, servo3_raw : 1454, servo4_raw : 1545, servo5_raw : 1547, servo6_raw : 1672, servo7_raw : 1327, servo8_raw : 1452}
+2022-12-24 22:33:09.381079 Disarm edildi.
+2022-12-24 22:33:15.876336 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 22:33:47.021720
+2022-12-24 22:33:48.377806 Arm edildi.
+2022-12-24 22:33:51.387585 SERVO_OUTPUT_RAW {time_usec : 475433552, port : 0, servo1_raw : 1500, servo2_raw : 1500, servo3_raw : 1500, servo4_raw : 1500, servo5_raw : 1500, servo6_raw : 1500, servo7_raw : 1500, servo8_raw : 1500}
+2022-12-24 22:33:51.388168 ACRO Degistirldi.
+2022-12-24 22:33:51.395411 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:33:51.403276 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 0}
+2022-12-24 22:33:51.411716 SERVO_OUTPUT_RAW {time_usec : 475456425, port : 0, servo1_raw : 1505, servo2_raw : 1502, servo3_raw : 1497, servo4_raw : 1502, servo5_raw : 1471, servo6_raw : 1545, servo7_raw : 1454, servo8_raw : 1528}
+2022-12-24 22:34:02.185989 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 0}
+2022-12-24 22:34:02.192119 SERVO_OUTPUT_RAW {time_usec : 486238643, port : 0, servo1_raw : 1459, servo2_raw : 1459, servo3_raw : 1540, servo4_raw : 1459, servo5_raw : 1545, servo6_raw : 1598, servo7_raw : 1401, servo8_raw : 1454}
+2022-12-24 22:34:07.204926 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 4}
+2022-12-24 22:34:07.211982 SERVO_OUTPUT_RAW {time_usec : 491258759, port : 0, servo1_raw : 1464, servo2_raw : 1464, servo3_raw : 1535, servo4_raw : 1464, servo5_raw : 1549, servo6_raw : 1602, servo7_raw : 1397, servo8_raw : 1450}
+2022-12-24 22:34:12.375874 Disarm edildi.
+2022-12-24 22:34:13.374996 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 22:34:53.572574
+2022-12-24 22:34:54.373121 Arm edildi.
+2022-12-24 22:34:57.385610 SERVO_OUTPUT_RAW {time_usec : 541436212, port : 0, servo1_raw : 1478, servo2_raw : 1477, servo3_raw : 1522, servo4_raw : 1477, servo5_raw : 1580, servo6_raw : 1594, servo7_raw : 1405, servo8_raw : 1419}
+2022-12-24 22:34:57.386591 ACRO Degistirldi.
+2022-12-24 22:34:57.394862 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:34:58.378872 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 0}
+2022-12-24 22:34:58.385076 SERVO_OUTPUT_RAW {time_usec : 542436187, port : 0, servo1_raw : 1485, servo2_raw : 1485, servo3_raw : 1514, servo4_raw : 1485, servo5_raw : 1579, servo6_raw : 1592, servo7_raw : 1407, servo8_raw : 1420}
+2022-12-24 22:35:09.149420 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 0}
+2022-12-24 22:35:09.157882 SERVO_OUTPUT_RAW {time_usec : 553208890, port : 0, servo1_raw : 1490, servo2_raw : 1490, servo3_raw : 1509, servo4_raw : 1490, servo5_raw : 1585, servo6_raw : 1612, servo7_raw : 1387, servo8_raw : 1414}
+2022-12-24 22:35:14.171292 {'mavpackettype': 'COMMAND_ACK', 'command': 115, 'result': 4}
+2022-12-24 22:35:14.178979 SERVO_OUTPUT_RAW {time_usec : 558231131, port : 0, servo1_raw : 1514, servo2_raw : 1514, servo3_raw : 1485, servo4_raw : 1514, servo5_raw : 1571, servo6_raw : 1587, servo7_raw : 1412, servo8_raw : 1428}
+2022-12-24 22:35:19.370238 Disarm edildi.
+2022-12-24 22:35:20.370757 Disarm edildi.
+\\ GOREV BASLADI ///2022-12-24 22:35:32.830499
+2022-12-24 22:35:39.368713 Arm edildi.
+2022-12-24 22:35:42.372597 STABILIZE geçildi.
+2022-12-24 22:35:42.380068 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:35:42.389041 SERVO_OUTPUT_RAW {time_usec : 586443853, port : 0, servo1_raw : 1460, servo2_raw : 1460, servo3_raw : 1539, servo4_raw : 1460, servo5_raw : 1421, servo6_raw : 1403, servo7_raw : 1596, servo8_raw : 1578}
+2022-12-24 22:36:13.165008 MANUAL geçildi.
+2022-12-24 22:36:13.198095 {'mavpackettype': 'COMMAND_ACK', 'command': 11, 'result': 0}
+2022-12-24 22:36:13.207820 SERVO_OUTPUT_RAW {time_usec : 617264456, port : 0, servo1_raw : 1500, servo2_raw : 1500, servo3_raw : 1500, servo4_raw : 1500, servo5_raw : 1500, servo6_raw : 1500, servo7_raw : 1500, servo8_raw : 1500}
+2022-12-24 22:36:20.365202 Disarm edildi.
+2022-12-24 22:36:26.105916 Disarm edildi.

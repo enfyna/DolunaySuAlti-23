@@ -4,13 +4,13 @@ Uçuş kontrol kartı üretilecek olan İHA/SİDA'larda kullanılan ;içinde iş
 
     Örnek olarak Pixhawk, APM, Navio2 ve Mamba verilebilir.
 
-PixHawk
----
-
-Piyasada bilinen bir marka olması ,kullanmayı planladığımız tüm giriş/çıkış portlarına sahip olması ,internette ayarlanması ve kullanımı hakkında yeterli kaynaklara sahip olması nedeni ile seçilmesine karar verildi. 
-
-- Özellikler
+- PixHawk
     -
+
+    Piyasada bilinen bir marka olması ,kullanmayı planladığımız tüm giriş/çıkış portlarına sahip olması ,internette ayarlanması ve kullanımı hakkında yeterli kaynaklara sahip olması nedeni ile seçilmesine karar verildi. 
+
+    - Özellikler
+        -
 
         - 168 mHz CortexM4F CPU
         - ST Micro L3GD20H 16 bit gyroscope
@@ -27,52 +27,52 @@ Piyasada bilinen bir marka olması ,kullanmayı planladığımız tüm giriş/ç
 
 İki aygıtın ya da yazılımın kendi aralarında gönderdikleri verileri anlamlandırmak için kullanılan protokollerdir.
 
-    ArduPilot'un desteklediği Mavlink protokolünün kullanılmasına karar verildi.
+- ArduPilot'un desteklediği Mavlink protokolünün kullanılmasına karar verildi.
 
-Mavlink
----
+    - Mavlink
+        -
 
-Mavlink İHA/SİDA'larda kullanılan bir mesaj protokolüdür.Araçta Pixhawk ve JN arasındaki iletişimi 
+        Mavlink İHA/SİDA'larda kullanılan bir mesaj protokolüdür.Araçta Pixhawk ve JN arasındaki iletişimi 
 sağlaması için kullanıldı.Python ile kullanabilmek için pymavlink kütüphanesinin kullanılması gerekmektedir.Yazılan kodlar JN'da çalıştırılır ve bu sayede pixhawk ile bağlantı kurulmuş olur.
 
 
 
-- Mavlink Kodlama
-    -
+        - Mavlink Kodlama (pymavlink)
+            -
     
-    Mavlink JN ve pixhawk arasında bağlantı kurulduktan sonra komutlar ve mesajlar kullanarak 2 sistem arasındaki iletişimi sağlar.
+            Mavlink JN ve pixhawk arasında bağlantı kurulduktan sonra komutlar ve mesajlar kullanarak 2 sistem arasındaki iletişimi sağlar.
     Pixhawk'tan istediğimiz veriyi ya da yaptırmak istediğimiz görevin mesajını komutlar sayesinde göndeririz.Pixhawk gerekli işlemleri yaptıktan sonra yaptığı işlemin başarılı olup olmadığını gösteren bir mesajı "CMD_ACK" komutuyla geri döndürür.
     Bu komutun sonucuna göre bir sonraki adıma geçip geçemeyeceğimizi öğreniriz.
     
 
-    Örnek : 
-    -
+            - Örnek : 
+                -
     
-        from pymavlink import mavutil #Kütüphaneyi ekle.
+                    from pymavlink import mavutil #Kütüphaneyi ekle.
 
-        master = mavutil.mavlink_connection("/dev/ttyACM0")
-        #Bağlantı objesi oluştur.
-        #mavlink_connection fonksiyonuna pixhawkın
-        bulunduğu port yazılır.
-        #Port bilgisi doğru ise Pixhawk'a bağlanırız.
+                    master = mavutil.mavlink_connection("/dev/ttyACM0")
+                    #Bağlantı objesi oluştur.
+                    #mavlink_connection fonksiyonuna pixhawkın
+                    bulunduğu port yazılır.
+                    #Port bilgisi doğru ise Pixhawk'a bağlanırız.
 
-        master.wait_heartbeat()
-        #Kalp atışını bekle
-        #Kalp atışları mavlinkin kullandığı bir mesaj tipidir.
-        #Bu mesajda Pixhawk belli aralıklarla Jetson
-        Nano'ya hangi modu kullandığı gibi temel bilgileri
-        gönderir.
-        
-        master.mav.command_long_send(master.target_system,master.target_component,
-        mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, #Gönderilen komut
-        0, #Confirmation parametresi
-        1,0,0,0,0,0,0) #Gönderilen komutun parametreleri
-        #Yukarıdaki fonksiyon ile pixhawk'a komut gönderebiliyoruz.
-        #Bu örnekte arm etme komutunu gönderiyoruz.
-        #Arm etme komutunun 1. parametresi 1 olursa pixhawk'ı arm ,0 ise disarm eder.Bu örnekte 1 olduğu için pixhawk arm olacak.
+                    master.wait_heartbeat()
+                    #Kalp atışını bekle
+                    #Kalp atışları mavlinkin kullandığı bir mesaj tipidir.
+                    #Bu mesajda Pixhawk belli aralıklarla Jetson
+                    Nano'ya hangi modu kullandığı gibi temel bilgileri
+                    gönderir.
+                    
+                    master.mav.command_long_send(master.target_system,master.target_component,
+                    mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, #Gönderilen komut
+                    0, #Confirmation parametresi
+                    1,0,0,0,0,0,0) #Gönderilen komutun parametreleri
+                    #Yukarıdaki fonksiyon ile pixhawk'a komut gönderebiliyoruz.
+                    #Bu örnekte arm etme komutunu gönderiyoruz.
+                    #Arm etme komutunun 1. parametresi 1 olursa pixhawk'ı arm ,0 ise disarm eder.Bu örnekte 1 olduğu için pixhawk arm olacak.
 
-        msg2 = link.recv_match(type='COMMAND_ACK', blocking=True).to_dict() #CMD_ACK komutunu yakala.
-        print(msg2['result']) # Son verilen komutun sonucuna bak.Eğer 0 ise komut başarı ile gerçekleşmiştir.
+                    msg2 = link.recv_match(type='COMMAND_ACK', blocking=True).to_dict() #CMD_ACK mesajını yakala.
+                    print(msg2['result']) # Son verilen komutun sonucuna bak.Eğer 0 ise komut başarı ile gerçekleşmiştir.
     
    
 
@@ -85,9 +85,9 @@ Yer kontrol istasyonları üretilecek olan İHA/SİDA'ların kurulumunda kullan�
     Bu yazılımlara örnek olarak QGroundControl,Mission Planner,APM Planner,MAVProxy,Visionair ve UgCS verilebilir.
 
 
-QGroundControl (QGC)
----
-* Arayüzünün basit ,sade ve istenilen ayarların hızlıca bulunabilmesinden dolayı QGC'nin kullanılmasına karar verildi.
+- QGroundControl (QGC)
+    -
+    Arayüzünün basit ,sade ve istenilen ayarların hızlıca bulunabilmesinden dolayı QGC'nin kullanılmasına karar verildi.
 
 ---
 
@@ -105,8 +105,36 @@ Aracın makine öğrenmesi, renk algılama, sensörlerden gelen bilgileri alma v
 
 ---
 
+# Sensörler
+
+Sensörler istenilen bir fiziksel değişkeni algılayıp çıkış sinyali oluşturan cihazlardır.Araç dışarıdan destek almadan otonom bir şekilde çalışabilmesi için gerekli verileri sensörler sayesinde alır.
+
+- Kamera
+    -       
+    - Özellikler
+
+- Hidrofon
+    -       
+    - Özellikler
+
+- Mesafe sensörü
+    -    
+    - Özellikler
+
+- Basınç sensörü
+    -       
+    - Özellikler
+
+---
+
 # Görevler
 
 - 1.Görev : Renk tespiti ve konumlanma görevi
     ---
-        
+    Adımlar: 
+
+        - Ara 
+        - Bul
+        - Kon
+
+

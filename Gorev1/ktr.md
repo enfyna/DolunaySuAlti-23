@@ -41,8 +41,8 @@ sağlaması için kullanıldı.Python ile kullanabilmek için pymavlink kütüph
             -
     
             Mavlink JN ve pixhawk arasında bağlantı kurulduktan sonra komutlar ve mesajlar kullanarak 2 sistem arasındaki iletişimi sağlar.
-    Pixhawk'tan istediğimiz veriyi ya da yaptırmak istediğimiz görevin mesajını komutlar sayesinde göndeririz.Pixhawk gerekli işlemleri yaptıktan sonra yaptığı işlemin başarılı olup olmadığını gösteren bir mesajı "CMD_ACK" komutuyla geri döndürür.
-    Bu komutun sonucuna göre bir sonraki adıma geçip geçemeyeceğimizi öğreniriz.
+            Pixhawk'tan istediğimiz veriyi ya da yaptırmak istediğimiz görevin mesajını komutlar sayesinde göndeririz.Pixhawk gerekli işlemleri yaptıktan sonra yaptığı işlemin başarılı olup olmadığını gösteren bir mesajı "CMD_ACK" komutuyla geri döndürür.
+            Bu komutun sonucuna göre bir sonraki adıma geçip geçemeyeceğimizi öğreniriz.
     
 
             - Örnek : 
@@ -91,16 +91,22 @@ Yer kontrol istasyonları üretilecek olan İHA/SİDA'ların kurulumunda kullan�
 
 ---
 
-# Nvidia Jetson Nano (JN)
+# Ana Bilgisayar
 
-Aracın makine öğrenmesi, renk algılama, sensörlerden gelen bilgileri alma ve hesaplama gibi işlemleri yapması için bir bilgisayar gereklidir.Nvidia Jetson Nano sahip olduğu işlem gücü ve küçük boyutu nedeni ile kullanılmasına karar verildi.
+Aracın makine öğrenmesi, renk algılama, sensörlerden gelen bilgileri alma ve hesaplama gibi işlemleri yapması için bir bilgisayar gereklidir.
 
-- Özellikleri
+- Nvidia Jetson Nano (JN)
+    -
+
+    Nvidia Jetson Nano sahip olduğu işlem gücü ve küçük boyutu nedeni ile kullanılmasına karar verildi.
+
+    - Özellikleri
 
         - Ekran Kartı	 : 128-core Maxwell
         - İşlemci 	 : Quad-core ARM A57 @ 1.43 GHz
         - Hafıza       : 4 GB 64-bit LPDDR4 25.6 GB/s
         - Boyut        : 100 mm x 80 mm x 29 mm
+        - ...
 
 
 ---
@@ -110,20 +116,31 @@ Aracın makine öğrenmesi, renk algılama, sensörlerden gelen bilgileri alma v
 Sensörler istenilen bir fiziksel değişkeni algılayıp çıkış sinyali oluşturan cihazlardır.Araç dışarıdan destek almadan otonom bir şekilde çalışabilmesi için gerekli verileri sensörler sayesinde alır.
 
 - Kamera
-    -       
+    -   
+    Kamera görüntü almayı sağlayan sensördür.Logitech WebCam kullanılmasına karar verildi.
+    
     - Özellikler
-
+        - 1080p
+        - USB bağlantı
+        
 - Hidrofon
     -       
+    Hidrofon sudaki ses dalgalarının yakalamaya yarayan sensördür.
+
     - Özellikler
+        - ...
 
 - Mesafe sensörü
-    -    
+    -   
+    Mesafe sensörü ses dalgaları göndererek yansıyan sesin arada geçen süresiyle mesafeyi hesaplayan sensördür.  
     - Özellikler
+        - ...
 
 - Basınç sensörü
     -       
+    Basınç sensörü sudaki basıncı ölçerek aracın su yüzeyinin ne kadar altında olduğunu metre cinsinden veren sensörüdür.
     - Özellikler
+        - ...
 
 ---
 
@@ -136,5 +153,6 @@ Sensörler istenilen bir fiziksel değişkeni algılayıp çıkış sinyali olu�
         - Ara 
         - Bul
         - Kon
+
 
 

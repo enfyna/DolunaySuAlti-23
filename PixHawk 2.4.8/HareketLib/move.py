@@ -69,7 +69,7 @@ def yukseklik(master,metre):
     )
     master.mav.send(command)
     
-def sagayönel(master,yawrate):
+def sagayonel(master,yawrate):
     command = master.mav.command_long_encode(
     master.target_system,
     master.target_component,
@@ -85,7 +85,7 @@ def sagayönel(master,yawrate):
     )
     master.mav.send(command)
 
-def solayönel(master,yawrate):
+def solayonel(master,yawrate):
     command = master.mav.command_long_encode(
     master.target_system,
     master.target_component,

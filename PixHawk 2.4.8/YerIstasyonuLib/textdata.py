@@ -1,4 +1,5 @@
 from pymavlink import mavutil
+import time
 
 def writedata(master):
     lines = data(master)+basinc(master)+motor(master)+mod(master)
@@ -19,9 +20,6 @@ def data(master):
     pitch = attitude.pitch
     data = [yaw,roll,pitch]
     return data
-    print("Yaw: ", yaw)
-    print("Roll: ", roll)
-    print("Pitch: ", pitch)
     
 def basinc(master):
     master.mav.command_long_send(master.target_system,master.target_component,
@@ -32,7 +30,13 @@ def basinc(master):
     pressure_abs = pressure.press_abs
     pressure_diff = pressure.press_diff
     temperature = pressure.temperature
-    data = [pressure_abs]
+    # Depth (m) = ((P0/ρ) - P) / g
+    p0 = 1013.25 
+    p = 1000.0
+    P=pressure_abs/1000.0
+    g = 9.83
+    pressuremeter = ((p0/p) - P)/g
+    data = [pressuremeter]
     return data
     
 def motor(master):
@@ -89,7 +93,7 @@ def decode_mode(base_mode, custom_mode):
         elif custom_mode == 18:
             mode = 'THROW'
         elif custom_mode == 19:
-            mode = 'AVOID_ADSB'
+            mode = 'MANUAL'
         elif custom_mode == 20:
             mode = 'GUIDED_NOGPS'
     return mode
@@ -101,5 +105,10 @@ def mod(master):
     mode = master.recv_match(type='HEARTBEAT', blocking=True)
     mode_name = decode_mode(mode.base_mode, mode.custom_mode)
     armed = mode.base_mode & mavutil.mavlink.MAV_MODE_FLAG_SAFETY_ARMED
-    data=[mode_name,armed]
+    armedtext = ""
+    if armed ==128:
+        armedtext = "ARMED"
+    else:
+        armedtext = "DISARM"
+    data=[mode_name,armedtext]
     return data

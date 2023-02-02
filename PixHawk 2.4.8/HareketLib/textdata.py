@@ -55,8 +55,9 @@ def motor(master):
     data =[engine.servo1_raw,engine.servo2_raw,engine.servo3_raw,engine.servo4_raw,engine.servo5_raw,
            engine.servo6_raw,engine.servo7_raw,engine.servo8_raw]
     return data
+"""
 def decode_mode(base_mode, custom_mode):
-    """Decode flight mode from base_mode and custom_mode fields of HEARTBEAT message"""
+    Decode flight mode from base_mode and custom_mode fields of HEARTBEAT message
     mode = 'UNKNOWN'
     if base_mode & mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED:
         if custom_mode == 0:
@@ -100,13 +101,15 @@ def decode_mode(base_mode, custom_mode):
         elif custom_mode == 20:
             mode = 'GUIDED_NOGPS'
     return mode
+"""
 def mod(master):
     master.mav.command_long_send(master.target_system,master.target_component,
                                      mavutil.mavlink.MAV_CMD_REQUEST_MESSAGE,
                                      0,
                                      0,0,0,0,0,0,0)
     mode = master.recv_match(type='HEARTBEAT', blocking=True)
-    mode_name = decode_mode(mode.base_mode, mode.custom_mode)
+    #mode_name = decode_mode(mode.base_mode, mode.custom_mode)
+    mode_name = list(master.mode_mapping().keys())[list(master.mode_mapping().values()).index(mode.custom_mode)]
     armed = mode.base_mode & mavutil.mavlink.MAV_MODE_FLAG_SAFETY_ARMED
     armedtext = ""
     if armed ==128:

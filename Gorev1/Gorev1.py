@@ -1,5 +1,5 @@
-import cv2 , time 
 import numpy as np
+import cv2
 
 class Gorev:
 

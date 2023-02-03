@@ -9,9 +9,9 @@ def left(master,t):
         master.mav.manual_control_send(
             master.target_system,
             0,
-            -800,
-            500,
             0,
+            0,
+            800,
             buttons
             )  
         textdata.writedata(master)
@@ -24,13 +24,14 @@ def right(master,t):
         master.mav.manual_control_send(
             master.target_system,
             0,
-            800,
-            500,
             0,
+            0,
+            800,
             buttons
             )  
         textdata.writedata(master)
         time.sleep(1)
+    
        
 
 def down(master,t): 

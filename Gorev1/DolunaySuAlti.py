@@ -49,6 +49,28 @@ class Dolunay():
         self.dp = 1500
         self.lpp = 0.3
         self.lpr = 0.3
+        
+        #PID katsayilari 
+        self.kp_roll = 0
+        self.ki_roll = 0
+        self.kd_roll = 0
+
+        self.kp_pitch = 0
+        self.ki_pitch = 0
+        self.kd_pitch = 0
+        #-----------------------------
+        #PID hesaplamalında kullanılacak degiskenler
+        #Degerler degistirilmemeli
+        self.integral_roll = 0
+        self.integral_pitch = 0
+        self.last_error_roll = 0
+        self.last_error_pitch = 0
+
+        self.dt = 1
+        self.time = 0
+        self.last_boot_time = 0
+        #-----------------------------
+        
         pass
 
     def hareket_et(self, x, y, z, r):
@@ -146,6 +168,98 @@ class Dolunay():
         set_throttle = sorted([1100, int(set_throttle+ 1500), 1900])[1]
         set_yaw      = sorted([1100, int(set_yaw     + 1500), 1900])[1]
 
+        self.dx = lerp(self.dx, set_forward,  0.1)
+        self.dy = lerp(self.dy, set_lateral,  0.1)
+        self.dz = lerp(self.dz, set_throttle, 0.1)
+        self.dr = lerp(self.dr, set_yaw,      0.1)
+    
+        ''' 
+        Degerler 1100-1900 arasinda olmali.1500 notr deger.
+        Eger kullanilmayacaksa 65535 olarak birakilmali.
+        Kaynak:
+            https://gist.github.com/ES-Alexander/ee1dd479dd728b7cef1bf936f9114e71
+        '''
+        self.master.mav.rc_channels_override_send(
+            self.master.target_system, self.master.target_component,
+            self.dp, # Pitch
+            self.do, # Roll
+            self.dz, # Throttle
+            self.dr, # Yaw
+            self.dx, # Forward
+            self.dy, # Lateral
+            65535,   # Camera_pan
+            65535,   # Camera_tilt
+            65535,   # Lights1
+            65535,   # Lights2
+            65535,   # Video_switch
+            65535, 65535, 65535, 65535, 65535, 65535, 65535) # Undefined (QGC kullanılarak bir fonksiyon atanabilinir.)
+        return
+    
+    def hareket_et_PID(self, set_forward, set_lateral, set_throttle, set_yaw, set_roll_deg, set_pitch_deg):
+        """
+        @set_forward  : "+" deger ileri         , "-" deger geri
+        @set_lateral  : "+" deger saga oteleme  , "-" deger sola oteleme
+        @set_throttle : "+" deger yukari        , "-" deger asagi
+        @set_yaw      : "+" deger saga cevirme  , "-" deger sola cevirme
+        @set_roll     : İstenilen roll acisi derece cinsinden verilmeli
+        @set_pitch    : İstenilen pitch acisi derece cinsinden verilmeli
+        Aracin dengesini saglamak icin roll ve pitch 0 verilmeli.
+        Ayni kodda hem hareket_et() ve hareket_et_v2() kullanilmamali.1 tanesi secilmeli.
+        Eger hareket icin bu fonksiyon kullanilacaksa baslangic degerleri 1500'e ayarlanmali.
+        Ornek : 
+        init():
+            self.dx = 1500
+        """
+        def lerp(durum, hedef, agirlik):
+            """
+            Durum sayisini hedefe dogru agirlik orani ile yaklastir.
+            -> Agirlik orani 1 den kucuk olmali.
+            Ornek : 
+            lerp( 0,100,0.5) == 50
+            lerp(50,100,0.5) == 75
+            """
+            return round((1 - agirlik) * durum + agirlik * hedef)
+
+        #Aracin dengesini korumaya calis
+        attitude = self.get_yaw_roll_pitch_deg() # Attitude bilgisini al
+        if attitude is not None: # None durumunu kontrol et
+            _, _, roll, rollspeed, pitch, pitchspeed ,time_boot_ms = attitude # Roll,Pitch bilgilerini al  
+
+            #PID hesaplamalarını yapabilmek icin dt yi hesapla
+            if time_boot_ms > self.last_boot_time:#Eger pixhawktan guncel zaman gelmediyse hesaplama
+                self.last_boot_time = time_boot_ms
+                self.dt = self.last_boot_time - self.time
+
+            #Roll icin PID hesapla
+            error_roll = (set_roll_deg - roll)                           #P
+            self.integral_roll += error_roll * self.dt                   #I
+            derivative =  (error_roll - self.last_error_roll) / self.dt  #D
+            self.last_error_roll = error_roll
+            self.do = round(self.kp_roll * error_roll + self.ki_roll * self.integral_roll + self.kd_roll * derivative)+1500
+
+
+            #Pitch icin PID hesapla
+            error_pitch = (set_pitch_deg - roll)                          #P
+            self.integral_pitch += error_pitch * self.dt                  #I
+            derivative =  (error_pitch - self.last_error_pitch) / self.dt #D
+            self.last_error_pitch = error_pitch
+            self.dp = round(self.kp_pitch * error_pitch + self.ki_pitch * self.integral_pitch + self.kd_pitch * derivative)+1500
+
+            #Zamani kaydet
+            self.time = self.last_boot_time
+        else:
+            #Attitude bilgisi alinamazsa roll,pitch motorlarini ayni seklilde cailstirmaya devam et
+            #self.do degismeyecegi icin bir onceki hesaplamadan calismaya devam edecek
+            pass
+        
+        set_forward  = sorted([1100, int(set_forward + 1500), 1900])[1]
+        set_lateral  = sorted([1100, int(set_lateral + 1500), 1900])[1]
+        set_throttle = sorted([1100, int(set_throttle+ 1500), 1900])[1]
+        set_yaw      = sorted([1100, int(set_yaw     + 1500), 1900])[1]
+
+        self.do    = sorted([1100, int(self.do    + 1500), 1900])[1]
+        self.dp    = sorted([1100, int(self.dp   + 1500), 1900])[1]
+        
         self.dx = lerp(self.dx, set_forward,  0.1)
         self.dy = lerp(self.dy, set_lateral,  0.1)
         self.dz = lerp(self.dz, set_throttle, 0.1)

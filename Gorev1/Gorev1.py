@@ -99,9 +99,6 @@ class Gorev:
             cx , cy = int(scm['m10']/scm['m00']) , int(scm['m01']/scm['m00'])
             # Ekrana cizdir 
             frame = self.cizgiciz(frame, secilen_c, cx, cy)
-            # Merkez noktasinin kameranin orta noktasina gore nerede kaldigini hesapla
-            # Ve araci ona gore hareket ettir
-            dx , dr = cx - self.cap_hx , cy - self.cap_hy
             
             if self.gorev_asamasi == 0:
                 # Bu kisim 1.gorev asamasini ayarliyor 
@@ -128,10 +125,12 @@ class Gorev:
             elif self.gorev_asamasi == 1:
                 self.agirlik = min(self.agirlik +1 , 50) # istenilen ozelliklere sahip c gorulurse agirligi arttir
                 self.hedef_kilit = 1 # Hedefi buldugumuzu ve araci kondurmaya basladigimizi kaydedelim
-                dy = dr # Bu asamada r ekseni yerine y eksenini kullanacagiz 
-                dr = None # r eksenini sifirla 
-                # x eksenini yukarida ayarlamistik
-                if abs(dx) < 100 and abs(dy) < 100:
+                
+                # Merkez noktasinin kameranin orta noktasina gore nerede kaldigini hesapla
+                dx , dy = cx - self.cap_hx , cy - self.cap_hy
+                # dx degeri ileri gitme , dy degeri yatay hizi ayarliyor
+
+                if abs(dx) < 100 and abs(dy) < 100:  #Testlerde deneyip iyi bir deger bulmak lazim
                     dz = 100 # Eger hedef ortalandiysa araci indir 
         else:
             if self.gorev_asamasi == 1: # Gorev asamasını kontrol et
@@ -156,7 +155,7 @@ class Gorev:
                     dz = 200
                     
         cv2.imshow("Renk Tespit", frame)
-        #print(str(dx),"-",str(dy),"-",str(dz),"-",str(dr))
+        print(str(dx),"-",str(dy),"-",str(dz),"-",str(dr))
         return dx , dy , dz , dr 
 
     def frame_al_SITL(self):

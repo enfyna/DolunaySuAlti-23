@@ -4,95 +4,174 @@ import cv2
 class Gorev:
 
     def __init__(self,baglanti_modu,cap):
+        
+        self.baglanti_modu = baglanti_modu
+
         # Gorevde kullanılacaklari ayarla
             # Kamerayi al ve cozunurlugu ayarla
         if baglanti_modu == "USB":
-            self.cap = cap
+            self.cap =  cv2.VideoCapture(0)
             self.cap_x , self.cap_y = int(cap.get(3)) , int(cap.get(4))
             self.cap_hx , self.cap_hy = int(self.cap_x/2) , int(self.cap_y/2) 
-        elif baglanti_modu == "SITL":
+        elif baglanti_modu == "SITL" or baglanti_modu == "BAGLI_DEGIL":
             self.cap_x , self.cap_y , self.cap_hx , self.cap_hy = 500 , 500 , 250 , 250
-            
-            # Renk aralıgı
-        self.lower_cyan = np.array([50, 60, 170])
-        self.upper_cyan = np.array([100, 255, 210])
-            # Erode-Dilate kernel
+        # Renk aralıgı
+        self.lower_cyan = np.array([20, 0, 0])
+        self.upper_cyan = np.array([100, 255, 255])
+        # Erode-Dilate kernel
         self.kernel = np.ones((5, 5), np.float32)
+
+        self.gorev_asamasi = 0
+        self.hedef_kilit = 0
+        self.anlik_kare_idx = 50
+        self.agirlik = 0
         pass
 
-    def calistir(self,baglanti_modu):
+    def gorev_asamasi_degistir(self):
+        # Gorev asamasi 0 ise 1 , 1 ise 0 yap
+        self.gorev_asamasi = (self.gorev_asamasi + 1) % 2
+        # Hedef kilidini sıfırla 
+        self.hedef_kilit = 0
+        # Araca kamera bagli ise kameralari ayarla
+        if self.baglanti_modu == "USB":
+            self.cap.release() # Onceki kamerayi kapat 
+            self.cap.VideoCapture(secilen_asama) # Diger kamerayi ac
+            # Kamera boyutunu ayarla
+            self.cap_x , self.cap_y = int(cap.get(3)) , int(cap.get(4))
+            self.cap_hx , self.cap_hy = int(self.cap_x/2) , int(self.cap_y/2) 
+        pass
 
-        if str(baglanti_modu) == "USB":
+    def calistir(self):
+        # Kamera bagli ise
+        if str(self.baglanti_modu) == "USB": 
             _, frame = cap.read()
-        else: #SITL
-            q = int(baglanti_modu)
-            yol = "/home/oem/Documents/Kod/Python/pixhawk/Gorev1/v3/"
-            dosya = str(yol)+((str(q)+".png").zfill(8))
-            try:
-                frame = cv2.imread(dosya)#cap.read() #Kare al
-                if frame is None:
-                    frame = 1/0
-                q+=1
-            except:
-                q = 200
-                dosya = str(yol)+((str(q)+".png").zfill(8))
-                frame = cv2.imread(dosya)#cap.read() #Kare al
+        #SITL ya da Bagli degil ise
+        else: 
+            frame = self.frame_al_SITL()
 
         # Bulanıklastır
-        frame_blur = cv2.GaussianBlur(frame, (5, 5), cv2.BORDER_DEFAULT)
-        #cv2.imwrite(yol+"blur.png", frame_blur)
-
+        frame = cv2.GaussianBlur(frame, (5, 5), cv2.BORDER_DEFAULT)
         # Renkleri tersine cevir
-        frame_inv = cv2.bitwise_not(frame_blur)
-        #cv2.imwrite(yol+'inv.png', frame_inv)
-
+        frame = cv2.bitwise_not(frame)
         # HSV'ye donustur
-        frame_hsv = cv2.cvtColor(frame_inv, cv2.COLOR_BGR2HSV)
-
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         # inRange ile camgobegi rengini bul
-        mask = cv2.inRange(frame_hsv, self.lower_cyan, self.upper_cyan)
-        #cv2.imwrite(yol+'mask.png', mask)
-        #cv2.imshow("mask",mask)
+        frame = cv2.inRange(frame, self.lower_cyan, self.upper_cyan)
 
-        # Erode-dilate yap
-        #mask = cv2.erode(mask, kernel, iterations=2)
-        #mask = cv2.dilate(mask, kernel, iterations=1)
-        #cv2.imwrite(yol+'erode-dilate.png', mask)
-        #cv2.imshow("ed",mask)
+        # Erode-dilate (Suanda kullanilmiyor)
+        # Kullanilmama sebebi bu islem yapildiktan sonra 
+        # approxPolyDP fonksiyonu karenin koselerini yumusattigi icin yuvarlak olarak goruyor 
+        #frame = cv2.erode(frame, kernel, iterations=2)
+        #frame = cv2.dilate(frame, kernel, iterations=1)
 
         # contour listesini al
         contours, _ = cv2.findContours(
-            mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            frame, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-        cx , cy = None , None
+        # Contour ozelliklerini kaydedecegimiz bilinmeyenler
+        anlik_max_c_alani , secilen_c , cx , cy = 0.0 , None , None , None
+        # Aracin hareket eksenleri
+        # x -> ileri-geri
+        # y -> sag-sol oteleme
+        # z -> asagi yukari
+        # r -> sag-sol donme
+        dx , dy , dz , dr = None , None , None , None
 
         for c in contours:
             approx = cv2.approxPolyDP(
-                c, 0.01 * cv2.arcLength(c, True), True)       
-            
-            if len(approx) < 8:
+                c, 0.01 * cv2.arcLength(c, True), True) 
+            if len(approx) < 8:# 8 koseden az olan contourlari ele
                 continue
-            else:
-                # finding center point of shape
+            else: 
+                # Moment hesabından c'nin alanını bul.
                 M = cv2.moments(c)
-                if M['m00'] != 0.0:
-                    cx = int(M['m10']/M['m00'])
-                    cy = int(M['m01']/M['m00'])
-
-                #self.cizgiciz(self,cap_hx,cap_hy,cx,cy)
-                frame = self.cizgiciz(frame, c, cx, cy)
+                # Anlik karedeki piksel alani en buyuk c'yi bul
+                if M['m00'] > anlik_max_c_alani:
+                    # Bulunan en buyuk c'yi anlik olarak kaydet
+                    secilen_c , scm , anlik_max_c_alani = c , M , M['m00']
+                    # scm -> secilen c momenti
         
+        cv2.waitKey(2)
+
+        # Eger uygun bir c bulunursa bulunan gorev asamasina gore islem yap
+        if secilen_c is not None:
+            # Secilen c'nin momentinden merkezini hesapla
+            cx , cy = int(scm['m10']/scm['m00']) , int(scm['m01']/scm['m00'])
+            # Ekrana cizdir 
+            frame = self.cizgiciz(frame, secilen_c, cx, cy)
+            # Merkez noktasinin kameranin orta noktasina gore nerede kaldigini hesapla
+            # Ve araci ona gore hareket ettir
+            dx , dr = cx - self.cap_hx , cy - self.cap_hy
+            
+            if self.gorev_asamasi == 0:
+                # Bu kisim 1.gorev asamasini ayarliyor 
+                # Araci en hizli bir sekilde buldugumuz c ye goturmemiz lazim
+                
+                # Merkez noktasinin kameranin orta noktasina gore nerede kaldigini hesapla
+                dx , dr = cx - self.cap_hx , cy - self.cap_hy
+                # dx degeri ileri gitme , dr degeri donme hizini ayarliyor
+                
+                # Eger buldugumuz c'ye yaklastiysak 2.asamaye gec 
+                if dr > int(self.cap_hy - self.cap_hy/5) and anlik_max_c_alani > 1000:
+                    # Yanlislikla 2.asamaya gecmemek icin c nin alaninin 1000 den buyuk
+                    # ve 10 defa ust uste gorursek gec
+                    self.agirlik +=1 
+                    if self.agirlik == 5 :
+                        self.agirlik = 100
+                        self.gorev_asamasi_degistir()
+                        if self.baglanti_modu != "USB":
+                            self.anlik_kare_idx = 0
+                else:
+                    # Eger c'ye daha yaklasmadiysak ya da alani cok kucukse agirligi azalt  
+                    self.agirlik = max(self.agirlik -1 , 0)
+                    
+            elif self.gorev_asamasi == 1:
+                self.agirlik = min(self.agirlik +1 , 50) # istenilen ozelliklere sahip c gorulurse agirligi arttir
+                self.hedef_kilit = 1 # Hedefi buldugumuzu ve araci kondurmaya basladigimizi kaydedelim
+                dy = dr # Bu asamada r ekseni yerine y eksenini kullanacagiz 
+                dr = None # r eksenini sifirla 
+                # x eksenini yukarida ayarlamistik
+                if abs(dx) < 100 and abs(dy) < 100:
+                    dz = 100 # Eger hedef ortalandiysa araci indir 
+        else:
+            if self.gorev_asamasi == 1: # Gorev asamasını kontrol et
+                # Bu kisim 2.gorev asamasının ilk ve son kismini ayarliyor
+                if self.hedef_kilit == 0:
+                    # 1. Kısım (Alt kameraya gecilen ilk an)
+                    # Bu kisimda araci ilerletirken alt kamera ile hedefi ariyoruz.
+                    # Eger belli bir sure icinde hedefi bulamazsak 1. gorev asamasina geri donmeliyiz
+
+                    dx = 100 # Hedefi goresiye kadar araci ilerletmeye devam et
+                    self.agirlik -= 1
+                    if self.agirlik == 0:
+                        self.gorev_asamasi_degistir()
+
+                elif self.hedef_kilit == 1:
+                    # 2. Kısım (Hedefin bulundugu ve ustune konmaya baslanilan an)
+                    # Hedefi bulup ustune konmaya basladıgımızda hedefe cok yaklastıgımızda 
+                    # hedef kameranin tamamini kaplayacagi ya da golge olusması sebebiyle 
+                    # istenilen bir c bulunamayabilir.Eger hedef_kilit degiskenimiz 1 ise 
+                    # hedef ile arac arasinda cok az bir mesafe kaldigini bildigimizden 
+                    # dz degiskenini arttirarak hedefe konmasini ve orada kalmasini saglayabiliriz.
+                    dz = 200
+                    
         cv2.imshow("Renk Tespit", frame)
-        #cv2.imwrite(yol+'son.png', frame)
-        
-        if cv2.waitKey(1) == ord("q"):
-            pass
+        #print(str(dx),"-",str(dy),"-",str(dz),"-",str(dr))
+        return dx , dy , dz , dr 
 
-        if cx is not None:
-            cx = cx - self.cap_hx
-        if cy is not None:
-            cy = cy - self.cap_hy
-        return cx , cy
+    def frame_al_SITL(self):
+        yol = "/home/oem/Documents/Kod/Python/DolunaySuAlti-23-main/Gorev1/Asama"+str(self.gorev_asamasi)+"/"
+        dosya = str(yol)+((str(self.anlik_kare_idx)+".png").zfill(8))
+        try:
+            frame = cv2.imread(dosya)
+            if frame is None:
+                raise()
+            self.anlik_kare_idx+=1
+        except:
+            self.anlik_kare_idx = 0
+            dosya = str(yol)+((str(self.anlik_kare_idx)+".png").zfill(8))
+            frame = cv2.imread(dosya)
+        return frame
 
     def cizgiciz(self,frame,c,cx,cy):
         s = ""
@@ -107,8 +186,8 @@ class Gorev:
         cv2.putText(frame, s,(self.cap_hx, self.cap_hy),
                         cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 2)
         cv2.line(frame, (int(cx), int(cy)), (self.cap_hx, self.cap_hy), (0, 255, 0), 2)
-        cv2.drawContours(frame, [c], 0, (0, 255 ,0 ), 2)
+        cv2.drawContours(frame, [c], 0, (0, 255 ,self.hedef_kilit*255), 2)
         return frame
 
-    def cap_yoket(self):
+    def sonlandir(self):
         self.cap.release()

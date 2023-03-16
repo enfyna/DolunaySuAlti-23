@@ -90,6 +90,8 @@ class Gorev1:
             cx , cy = scm['m10']//scm['m00'] , scm['m01']//scm['m00']
             # Ekrana cizdir 
             dispframe = self.cizgiciz(dispframe, secilen_c, cx, cy)
+
+            dx , dr , dz = cx - self.cap_hx , cy - self.cap_hy , cy - self.cap_hy
                     
         cv2.imshow("Renk Tespit", dispframe)
         cv2.waitKey(2)

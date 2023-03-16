@@ -61,15 +61,14 @@ class Mikrofon():
 
     def calistir(self):
         spec_y , y = self.fft_v3()
-        #self.graphplot(spec_y)
+        self.graphplot(spec_y)
         return y
 
     def fft_v3(self):
         """
         Gelen ses dalgasina FFT uygula.
         """
-        data  = y = self.data 
-        RATE = self.RATE
+        data = y = self.data 
         CHUNK = self.CHUNK 
         START = self.START 
         N = self.N
@@ -80,13 +79,15 @@ class Mikrofon():
         x = self.stream.read(CHUNK,False)
         x = np.frombuffer(x, np.float32)
         #LPF uygula.
-        for i in range(CHUNK):
-            data[i] = (x[i] * K1) + (x[i - 1] * K2) - (y[i - 1] * K3)
-        wave_y = data[START:START + N]
+        #for i in range(CHUNK):
+            #data[i] = (x[i] * K1) + (x[i - 1] * K2) - (y[i - 1] * K3)
+        #data = list(map(lambda x,x2,y: (x*K1)+(x2*K2)-(y*K3), x[1:], x[:-1], y[:-1]))
+        #wave_y = data[START:START + N]
+        #wave_y = x[START:START+N]
         #FFT uygula.
-        y = np.fft.rfft(wave_y)
+        #y = np.fft.rfft(wave_y)
+        y = np.fft.rfft(x)
         spec_y = [(c.real ** 2 + c.imag ** 2) for c in y]
-        #spec_y = [((c.real) + (c.imag)) for c in y]
 
         #İstenilen frekans araligindaki maks genligi bul
         max_spec_y = max(spec_y[500:1000]) # -> 2000 ve 4000 frekans araligindaki maks genligi buluyor    
@@ -124,8 +125,8 @@ if __name__ == "__main__":
     i = 0
     try:
         while i < 100:
-            #g.calistir()
-            g.fft_v3()
+            g.calistir()
+            #g.fft_v3()
             i += 1
             #time.sleep(0.1)
     except KeyboardInterrupt:

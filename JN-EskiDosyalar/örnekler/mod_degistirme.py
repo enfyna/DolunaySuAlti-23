@@ -1,43 +1,49 @@
-import sys
-# Import mavutil
 from pymavlink import mavutil
+import sys
 
-# Create the connection
+# Pixhawk ile bağlantı kur
 master = mavutil.mavlink_connection('/dev/serial/by-id/usb-ArduPilot_Pixhawk1_3D004F000651353136343336-if00')
-# Wait a heartbeat before sending commands
+
+# Heartbeat mesajını bekle
 master.wait_heartbeat()
 
-# Choose a mode
+# Pixhawkı geçirmek istediğin modu seç 
 mode = 'ACRO'
 
-# Check if mode is available
+# Pixhawkta bu mod var mı diye kontrol et
 if mode not in master.mode_mapping():
     print('Unknown mode : {}'.format(mode))
     print('Try:', list(master.mode_mapping().keys()))
     sys.exit(1)
 
-# Get mode ID
+# Mod ID'sini al
 mode_id = master.mode_mapping()[mode]
-# Set new mode
+
+# Mod değiştirme için bir kaç tane fonksiyon var istediğini kullanabilirsin
+
 # master.mav.command_long_send(
 #    master.target_system, master.target_component,
 #    mavutil.mavlink.MAV_CMD_DO_SET_MODE, 0,
-#    0, mode_id, 0, 0, 0, 0, 0) or:
-# master.set_mode(mode_id) or:
+#    0, mode_id, 0, 0, 0, 0, 0
+# )
+
+# master.set_mode(mode_id)
+
 master.mav.set_mode_send(
     master.target_system,
     mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
-    mode_id)
+    mode_id
+    )
 
 while True:
-    # Wait for ACK command
+    # ACK komutunu bekle
     ack_msg = master.recv_match(type='COMMAND_ACK', blocking=True)
     ack_msg = ack_msg.to_dict()
 
-    # Check if command in the same in `set_mode`
+    # Set mode fonksiyonunun ACK komutunu almış mıyız diye kontrol et
     if ack_msg['command'] != mavutil.mavlink.MAVLINK_MSG_ID_SET_MODE:
         continue
 
-    # Print the ACK result !
+    # ACK mesajını yazdır
     print(mavutil.mavlink.enums['MAV_RESULT'][ack_msg['result']].description)
     break

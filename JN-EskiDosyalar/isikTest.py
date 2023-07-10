@@ -49,8 +49,6 @@ class Modes(Enum):
 print('Connecting to vehicle on: %s' % connection_string)
 vehicle = connect(connection_string, wait_ready=True)
 
-
-
 @vehicle.on_message('HEARTBEAT')
 def listener(self, name, message):
     if(message.base_mode > 0):

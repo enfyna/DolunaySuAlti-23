@@ -1,12 +1,11 @@
-from __future__ import print_function
 from dronekit import connect, VehicleMode, LocationGlobalRelative, Command, Battery, LocationGlobal, Attitude
 from pymavlink import mavutil
+import numpy as np
+import argparse
+import imutils
 import math
 import time
-import numpy as np
 import cv2
-import numpy as np
-import imutils
 
 def gstreamer_pipeline(
 	sensor_id=0,
@@ -35,29 +34,18 @@ def gstreamer_pipeline(
 		)
 	)
 
-### araç ile bağlantı
-import argparse
-parser = argparse.ArgumentParser(description='Demonstrates basic mission operations.')
+parser = argparse.ArgumentParser(
+	description='Demonstrates basic mission operations.')
+
 parser.add_argument('--connect',
-					default='/dev/serial/by-id/usb-ArduPilot_Pixhawk1_2B004D000B51373232393438-if00')
+	default='/dev/serial/by-id/usb-ArduPilot_Pixhawk1_2B004D000B51373232393438-if00')
+
 args = parser.parse_args()
-
 connection_string = args.connect
-sitl = None
 
-#Start SITL if no connection string specified
-"""
-if not connection_string:
-	import dronekit_sitl
-	sitl = dronekit_sitl.start_default()
-	connection_string = sitl.connection_string()
-
-"""
-# Connect to the Vehicle
 print('Connecting to vehicle on: %s' % connection_string)
 vehicle = connect(connection_string, wait_ready=True)
 
-###
 def nokta_ekleme(hedef):
 	a_file = open("nokta_sekiz.txt", "r")
 	list_of_lines = a_file.readlines()
@@ -121,7 +109,6 @@ def upload_mission(aFileName):
 		cmds.add(command)
 	print(' Upload mission')
 	vehicle.commands.upload()
-
 
 ### istenilen noktanın koordinatlarını alan fonksiyon
 def get_location_metres(original_location, dNorth, dEast):

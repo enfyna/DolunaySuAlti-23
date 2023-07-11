@@ -1,30 +1,21 @@
-from __future__ import print_function
 from dronekit import connect, VehicleMode, LocationGlobalRelative, Command, Battery, LocationGlobal, Attitude
 from pymavlink import mavutil
+import numpy as np
+import argparse
+import imutils
 import math
 import time
-import numpy as np
 import cv2
-import imutils
 
-### araç ile bağlantı
-import argparse
-parser = argparse.ArgumentParser(description='Demonstrates basic mission operations.')
+parser = argparse.ArgumentParser(
+	description='Demonstrates basic mission operations.')
+
 parser.add_argument('--connect',
-					default='/dev/serial/by-id/usb-ArduPilot_Pixhawk1_3D004F000651353136343336-if00')
+	default='/dev/serial/by-id/usb-ArduPilot_Pixhawk1_3D004F000651353136343336-if00')
+
 args = parser.parse_args()
-
 connection_string = args.connect
-sitl = None
 
-#Start SITL if no connection string specified
-if not connection_string:
-	import dronekit_sitl
-	sitl = dronekit_sitl.start_default()
-	connection_string = sitl.connection_string()
-
-
-# Connect to the Vehicle
 print('Connecting to vehicle on: %s' % connection_string)
 vehicle = connect(connection_string, wait_ready=True)
 
@@ -226,15 +217,13 @@ arm_and_takeoff(10)
 
 görev_flag = True
 
-"""while True:
+"""
+while True:
 	if (vehicle.commands.next == 3) and görev_flag:
-
-
 		sağdan()
 		görev_flag = False
 		import_mission_filename = 'yeni_1.txt'
 		upload_mission(import_mission_filename)
-
 """
 
 # Flag tanımlamaları

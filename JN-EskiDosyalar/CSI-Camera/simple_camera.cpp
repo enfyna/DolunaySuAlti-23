@@ -25,17 +25,18 @@ int main()
     int flip_method = 0 ;
 
     std::string pipeline = gstreamer_pipeline(capture_width,
-	capture_height,
-	display_width,
-	display_height,
-	framerate,
-	flip_method);
+            capture_height,
+            display_width,
+            display_height,
+            framerate,
+            flip_method
+    );
     std::cout << "Using pipeline: \n\t" << pipeline << "\n";
  
     cv::VideoCapture cap(pipeline, cv::CAP_GSTREAMER);
     if(!cap.isOpened()) {
-	std::cout<<"Failed to open camera."<<std::endl;
-	return (-1);
+        std::cout<<"Failed to open camera."<<std::endl;
+        return (-1);
     }
 
     cv::namedWindow("CSI Camera", cv::WINDOW_AUTOSIZE);
@@ -45,13 +46,14 @@ int main()
     while(true)
     {
     	if (!cap.read(img)) {
-		std::cout<<"Capture read error"<<std::endl;
-		break;
+            std::cout<<"Capture read error"<<std::endl;
+            break;
 	}
 	
 	cv::imshow("CSI Camera",img);
 	int keycode = cv::waitKey(10) & 0xff ; 
-        if (keycode == 27) break ;
+        if (keycode == 27) 
+            break ;
     }
 
     cap.release();

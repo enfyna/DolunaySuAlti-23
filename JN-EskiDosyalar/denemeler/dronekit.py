@@ -1,13 +1,11 @@
 from dronekit import connect, VehicleMode, LocationGlobalRelative, Command, Battery, LocationGlobal, Attitude
-from pymavlink import mavutil
-import socket
 from math import sin, cos, sqrt, atan2, radians
-import math
-import time
-import argparse
+from pymavlink import mavutil
 import numpy as np
+import argparse
+import socket
 import time
-from dronekit import connect, VehicleMode, LocationGlobalRelative
+
 """
 © Copyright 2015-2016, 3D Robotics.
 simple_goto.py: GUIDED mode "simple goto" example (Copter Only)
@@ -16,24 +14,17 @@ Full documentation is provided at http://python.dronekit.io/examples/simple_goto
 """
 
 # Set up option parsing to get connection string
-import argparse
-parser = argparse.ArgumentParser(description='Commands vehicle using vehicle.simple_goto.')
+parser = argparse.ArgumentParser(
+	description='Commands vehicle using vehicle.simple_goto.')
+
 #parser.add_argument('--connect',
-#                    default='tcp:127.0.0.1:5762')
+#  	 default='tcp:127.0.0.1:5762')
 
 parser.add_argument('--connect',
-					default='/dev/serial/by-id/usb-ArduPilot_Pixhawk1_3D004F000651353136343336-if00')
+	default='/dev/serial/by-id/usb-ArduPilot_Pixhawk1_3D004F000651353136343336-if00')
 
 args = parser.parse_args()
-
 connection_string = args.connect
-sitl = None
-
-# Start SITL if no connection string specified
-if not connection_string:
-	import dronekit_sitl
-	sitl = dronekit_sitl.start_default()
-	connection_string = sitl.connection_string()
 
 # Connect to the Vehicle
 print('Connecting to vehicle on: %s' % connection_string)
@@ -125,6 +116,8 @@ while(1):
 	print("waypoint : ", vehicle.commands.next)
 	point1 = LocationGlobalRelative(40.2310694, 29.0104079, 20)
 	vehicle.simple_goto(point1)
+	#point1 = get_location_metres(vehicle.location.global_frame, -7 , -7)
+	#print(point1)
 
 # sleep so we can see the change in map
 time.sleep(30)
@@ -135,7 +128,3 @@ vehicle.mode = VehicleMode("RTL")
 # Close vehicle object before exiting script
 print("Close vehicle object")
 vehicle.close()
-
-# Shut down simulator if it was started.
-if sitl:
-	sitl.stop()

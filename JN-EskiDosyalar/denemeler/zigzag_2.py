@@ -1,11 +1,11 @@
-from pickle import TRUE
-from turtle import delay
-import plane_lib, time
 from dronekit import connect, VehicleMode, LocationGlobalRelative, Command, Battery, LocationGlobal, Attitude
 from math import sin, cos, sqrt, atan2, radians
-import cv2
+from turtle import delay
+from pickle import TRUE
+import plane_lib, time
 import numpy as np
 import imutils
+import cv2
 
 cruise_altitude = 30
 
@@ -60,7 +60,6 @@ def distance_to_current_waypoint():
 	"""
 	nextwaypoint = plane.vehicle.commands.next
 
-
 		# ben 1000 yaptım YEC
 
 	missionitem=plane.vehicle.commands[0] #commands are zero indexed
@@ -69,7 +68,6 @@ def distance_to_current_waypoint():
 	alt = missionitem.z
 	targetWaypointLocation = LocationGlobalRelative(lat,lon,alt)
 	distancetopoint = get_distance_metres(plane.vehicle.location.global_frame, targetWaypointLocation)
-
 
 	return distancetopoint
 

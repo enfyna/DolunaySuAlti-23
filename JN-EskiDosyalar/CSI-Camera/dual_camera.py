@@ -15,9 +15,7 @@ import cv2
 import threading
 import numpy as np
 
-
 class CSI_Camera:
-
     def __init__(self):
         # Initialize instance variables
         # OpenCV video capture element
@@ -42,7 +40,6 @@ class CSI_Camera:
             self.video_capture = None
             print("Unable to open camera")
             print("Pipeline: " + gstreamer_pipeline_string)
-
 
     def start(self):
         if self.running:
@@ -88,14 +85,12 @@ class CSI_Camera:
         if self.read_thread != None:
             self.read_thread.join()
 
-
 """ 
 gstreamer_pipeline returns a GStreamer pipeline for capturing from the CSI camera
 Flip the image by setting the flip_method (most common values: 0 and 2)
 display_width and display_height determine the size of each camera pane in the window on the screen
 Default 1920x1080
 """
-
 
 def gstreamer_pipeline(
     sensor_id=0,
@@ -123,7 +118,6 @@ def gstreamer_pipeline(
             display_height,
         )
     )
-
 
 def run_cameras():
     window_title = "Dual CSI Cameras"
@@ -177,11 +171,11 @@ def run_cameras():
                 if keyCode == 27:
                     break
         finally:
-
             left_camera.stop()
             left_camera.release()
             right_camera.stop()
             right_camera.release()
+            
         cv2.destroyAllWindows()
     else:
         print("Error: Unable to open both cameras")
@@ -189,7 +183,6 @@ def run_cameras():
         left_camera.release()
         right_camera.stop()
         right_camera.release()
-
 
 
 if __name__ == "__main__":

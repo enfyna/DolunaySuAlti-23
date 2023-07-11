@@ -40,7 +40,6 @@ def gstreamer_pipeline(
         )
     )
 
-
 def face_detect():
     window_title = "Face Detect"
     face_cascade = cv2.CascadeClassifier(
@@ -83,7 +82,6 @@ def face_detect():
             cv2.destroyAllWindows()
     else:
         print("Unable to open camera")
-
 
 if __name__ == "__main__":
     face_detect()

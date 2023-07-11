@@ -21,14 +21,16 @@ link.wait_heartbeat()
 #Mavlink ile baglanan cihazlar kalp atisi sinyali ile birbirlerine bagli oldugunu gosterir
 
 #Pixhawka arm etme komutu ver
-link.mav.command_long_send(link.target_system,link.target_component, #her emir icin sabit
-m.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, # emir kodu int olarakda verilebilir boylede yazılabilir
-0, #confirmation eger uzun sure cmd_ack alınamazsa 1 yapılıp tekrar gonderilir
-1,0,0,0,0,0,0) #emir parametreleri
-#İlk iki parametre sabit target system ve component bilgisi
-#3. parametre verilecek emrin kodu 
-#4. parametre confirmation 0 yazılır ilk once
-#Geriye kalan parametreler emrin kendi parametreleri her emir için farklı anlamları vardır
+link.mav.command_long_send(
+    link.target_system,link.target_component,#her komut icin sabit
+    m.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,#komut kodu int olarakda verilebilir boylede yazılabilir
+    0, #confirmation eger uzun sure cmd_ack alınamazsa 1 yapılıp tekrar gonderilir
+    1,0,0,0,0,0,0) #komut parametreleri
+
+# İlk iki parametre sabit target system ve component bilgisi
+# 3. parametre verilecek emrin kodu 
+# 4. parametre confirmation 0 yazılır ilk once
+# Geriye kalan parametreler emrin kendi parametreleri her emir için farklı anlamları vardır
 # https://mavlink.io/en/messages/common.html#mav_commands buradan bakılabilir
 
 time.sleep(1)
@@ -53,7 +55,7 @@ while True:
         if msg2['result'] == 0 or msg2['result'] == 4:
             msg2 = link.recv_match(blocking=True).to_dict()
             if msg2['mavpackettype'] != 'HEARTBEAT' and msg2['mavpackettype'] != 'TIMESYNC'\
-                and msg2['mavpackettype'] != 'STATUSTEXT': # bunlara gerek yok
+                and msg2['mavpackettype'] != 'STATUSTEXT': # bu paket tiplerini dinlemek istemiyoruz
                 s1 = 25 - len(msg2['mavpackettype'])
                 s = msg2['mavpackettype']+"_"*s1+str(i)+"\n"
                 print(s,end="\n")
@@ -66,24 +68,18 @@ while True:
         if msg2:
             print(msg2,end="--\n")
         time.sleep(1)
-        pass
     except Exception as e:
         print(type(e))
         time.sleep(5)
-        pass
     except KeyboardInterrupt:
         print("bruh")
         time.sleep(0.5)
-        breaK
+        break
+
 #Pixhawk disarm et
-link.mav.command_long_send(link.target_system,link.target_component, 
-m.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 
-0,
-0,0,0,0,0,0,0)
-
-
-
-
-
-
-
+link.mav.command_long_send(
+    link.target_system,link.target_component, 
+    m.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 
+    0,
+    0,0,0,0,0,0,0
+)

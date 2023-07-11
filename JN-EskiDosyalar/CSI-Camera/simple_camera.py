@@ -41,7 +41,6 @@ def gstreamer_pipeline(
         )
     )
 
-
 def show_camera():
     window_title = "CSI Camera"
 
@@ -69,7 +68,6 @@ def show_camera():
             cv2.destroyAllWindows()
     else:
         print("Error: Unable to open camera")
-
 
 if __name__ == "__main__":
     show_camera()

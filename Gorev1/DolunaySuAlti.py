@@ -11,7 +11,7 @@ class Dolunay():
 			if baglanti_modu == "USB":
 				while True:
 					if platform == "linux":
-						port = 'dev/ttyACM' + str(i)
+						port = '/dev/ttyACM' + str(i)
 					elif platform == "windows":
 						port = 'COM' + str(i)
 					else:
@@ -20,6 +20,7 @@ class Dolunay():
 						master = mavutil.mavlink_connection(port)
 						master.wait_heartbeat()
 						print("Arac ile baglanti kuruldu.")
+						break
 					except:
 						i += 1
 						if i > 20:
